@@ -1,11 +1,18 @@
+'use client';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
-export default function MyApp({ Component, pageProps }) {
+export default function Layout({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+      <html>
+        <body>
+          <h1>Testing suspense for Next.js 13</h1>
+          {children}
+        </body>
+      </html>
     </QueryClientProvider>
   );
 }

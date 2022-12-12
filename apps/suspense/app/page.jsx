@@ -1,9 +1,7 @@
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+'use client';
 
-const Todos = dynamic(() => import('../Todos'), {
-  suspense: true,
-});
+import { Suspense } from 'react';
+import Todos from '../Todos';
 
 export default function Home() {
   return (
