@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Layer, Rect, Stage } from 'react-konva';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const randomColors = ['#ada2ff', '#c0deff', '#ffe5f1', '#fff8e1'];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -11,42 +12,120 @@ function App() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.fillRect(0, 0, 150, 150); // Draw a rectangle with default settings
-    ctx.save(); // Save the default state
+    let radius = 30;
+    let x = 0 + radius;
+    let y = 0 + radius;
+    let dx = 10;
+    let dy = 10;
 
-    ctx.fillStyle = '#09F'; // Make changes to the settings
-    ctx.fillRect(15, 15, 120, 120); // Draw a rectangle with new settings
+    let mouse: { x: number | undefined; y: number | undefined } = {
+      x: undefined,
+      y: undefined,
+    };
 
-    ctx.save(); // Save the current state
-    ctx.fillStyle = '#FFF'; // Make changes to the settings
-    ctx.globalAlpha = 0.5;
-    ctx.fillRect(30, 30, 90, 90); // Draw a rectangle with new settings
+    const offset = 90;
 
-    ctx.restore(); // Restore previous state
-    ctx.fillRect(45, 45, 60, 60); // Draw a rectangle with restored settings
+    const maximumRadius = 60;
+    const minimumRadius = 2;
+    class Circle {
+      color: string;
 
-    ctx.restore(); // Restore original state
-    ctx.fillRect(60, 60, 30, 30); // Draw a rectangle with restored settings
+      constructor(
+        public dx: number,
+        public dy: number,
+        public x: number,
+        public y: number,
+        public radius: number,
+      ) {
+        this.color = randomColors[Math.floor(Math.random() * randomColors.length - 1)];
+      }
+
+      draw() {
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      update() {
+        if (this.x + this.radius > window.innerWidth || this.x - this.radius < 0) {
+          this.dx *= -1;
+        }
+
+        if (this.y + this.radius > window.innerHeight || this.y - this.radius < 0) {
+          this.dy *= -1;
+        }
+
+        if (
+          mouse.x &&
+          mouse.y &&
+          Math.abs(mouse.x - this.x) < offset &&
+          Math.abs(mouse.y - this.y) < offset &&
+          this.radius < maximumRadius
+        ) {
+          this.radius += 3;
+        }
+
+        if (
+          mouse.x &&
+          mouse.y &&
+          Math.abs(mouse.x - this.x) > offset &&
+          Math.abs(mouse.y - this.y) > offset &&
+          this.radius > minimumRadius
+        ) {
+          this.radius -= 2;
+        }
+
+        this.x += this.dx;
+        this.y += this.dy;
+
+        this.draw();
+      }
+    }
+
+    const circles: Circle[] = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const circle = new Circle(
+        3 * Math.random(),
+        3 * Math.random(),
+        30 + (window.innerWidth - 60) * Math.random(),
+        30 + (window.innerHeight - 60) * Math.random(),
+        minimumRadius,
+      );
+
+      circles.push(circle);
+    }
+
+    function animate() {
+      if (!ctx) return;
+
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      circles.forEach((circle) => {
+        circle.update();
+      });
+
+      window.requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      console.log(e.clientX, e.clientY);
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    animate();
   }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} className="App">
-      <Stage
-        style={{ backgroundColor: '#404258' }}
-        width={window.innerWidth}
-        height={window.innerHeight / 2}
-      >
-        <Layer>
-          <Rect x={100} y={100} width={200} height={200} fill="red" draggable></Rect>
-          <Rect x={150} y={150} opacity={0.5} width={200} height={200} fill="red" draggable></Rect>
-        </Layer>
-      </Stage>
-
       <canvas
         ref={canvasRef}
         style={{ backgroundColor: '#6B728E' }}
         width={window.innerWidth * window.devicePixelRatio}
-        height={(window.innerHeight / 2) * window.devicePixelRatio}
+        height={window.innerHeight * window.devicePixelRatio}
       >
         canvas is not supported
       </canvas>
