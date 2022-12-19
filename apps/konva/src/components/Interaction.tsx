@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-function App() {
+function Interaction() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const randomColors = ['#ada2ff', '#c0deff', '#ffe5f1', '#fff8e1'];
@@ -119,7 +119,18 @@ function App() {
     animate();
   }, []);
 
-  return <div className="App"></div>;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="App">
+      <canvas
+        ref={canvasRef}
+        style={{ backgroundColor: '#6B728E' }}
+        width={window.innerWidth * window.devicePixelRatio}
+        height={window.innerHeight * window.devicePixelRatio}
+      >
+        canvas is not supported
+      </canvas>
+    </div>
+  );
 }
 
-export default App;
+export default Interaction;
