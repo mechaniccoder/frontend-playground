@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { getDistance } from '../utils/math';
+import { useRandomColor } from './useRandomColor.1';
 
 export const Collision: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,12 +80,4 @@ export class Circle {
   public update() {
     this.draw();
   }
-}
-
-export function useRandomColor(colors: string[] = ['#EFF5F5', '#D6E4E5', '#497174', '#EB6440']) {
-  return () => colors[Math.floor(Math.random() * (colors.length - 1))];
-}
-
-export function getDistance(x1: number, y1: number, x2: number, y2: number) {
-  return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
