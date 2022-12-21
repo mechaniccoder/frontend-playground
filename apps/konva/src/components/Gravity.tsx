@@ -27,6 +27,7 @@ export const Gravity = () => {
     }
 
     function anim() {
+      if (!ctx) return;
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       balls.forEach((ball) => {
         ball.update();
