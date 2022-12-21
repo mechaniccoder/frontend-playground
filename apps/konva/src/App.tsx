@@ -1,7 +1,7 @@
-import { Gravity } from './components/Gravity';
+import { Collision } from './components/Collision';
 
 function App() {
-  return <Gravity />;
+  return <Collision />;
 }
 
 export default App;
