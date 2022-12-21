@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { useRandomColor } from '../hooks/useRandomColor';
 import { getDistance } from '../utils/math';
-import { useRandomColor } from './useRandomColor.1';
+import { Circle } from '../utils/shape';
 
 export const Collision: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -59,25 +60,3 @@ export const Collision: React.FC = () => {
     />
   );
 };
-
-export class Circle {
-  constructor(
-    public ctx: CanvasRenderingContext2D,
-    public x: number,
-    public y: number,
-    public radius: number,
-    public color: string,
-  ) {}
-
-  private draw() {
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
-
-  public update() {
-    this.draw();
-  }
-}

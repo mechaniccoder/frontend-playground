@@ -1,7 +1,7 @@
-import { Collision } from './components/Collision';
+import { Collision2 } from './components/Collision2';
 
 function App() {
-  return <Collision />;
+  return <Collision2 />;
 }
 
 export default App;
