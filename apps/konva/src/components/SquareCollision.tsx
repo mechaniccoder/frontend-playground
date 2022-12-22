@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { squareCollision } from '../utils/math';
 
 export const SquareCollision = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,21 +78,3 @@ export const SquareCollision = () => {
     />
   );
 };
-
-function squareCollision(
-  square1X: number,
-  square1Y: number,
-  square1Width: number,
-  square1Height: number,
-  square2X: number,
-  square2Y: number,
-  square2Width: number,
-  square2Height: number,
-) {
-  return (
-    square1X + square1Width >= square2X &&
-    square1X <= square2X + square2Width &&
-    square1Y + square1Height >= square2Y &&
-    square1Y <= square2Y + square2Height
-  );
-}
