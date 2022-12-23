@@ -1,7 +1,7 @@
-import { SquareCollision } from './components/SquareCollision';
+import { CircurlarMotion } from './components/CircurlarMotion';
 
 function App() {
-  return <SquareCollision />;
+  return <CircurlarMotion />;
 }
 
 export default App;
