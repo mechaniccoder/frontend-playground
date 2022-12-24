@@ -131,3 +131,54 @@ export const CanvasScrollEmulateScroll = () => {
     </div>
   );
 };
+
+export const CanvasScrollEmulateWithTransform = () => {
+  const WIDTH = 3000;
+  const HEIGHT = 3000;
+  const PADDING = 500;
+  const stageRef = useRef<Konva.default.Stage>(null);
+
+  return (
+    <div
+      id="scroll-container"
+      style={{
+        overflow: 'auto',
+        width: '100vw',
+        height: '100vh',
+        border: '1px solid grey',
+      }}
+      onScroll={(evt) => {
+        const evtTarget = evt.target as HTMLDivElement;
+        const dx = evtTarget.scrollLeft - PADDING;
+        const dy = evtTarget.scrollTop - PADDING;
+        if (!stageRef.current) return;
+        stageRef.current.container().style.transform = `translate(${dx}px, ${dy}px)`;
+        stageRef.current.x(-dx);
+        stageRef.current.y(-dy);
+      }}
+    >
+      <div id="large-container" style={{ width: WIDTH, height: HEIGHT, overflow: 'hidden' }}>
+        <Stage
+          ref={stageRef}
+          width={window.innerWidth + PADDING * 2}
+          height={window.innerHeight + PADDING * 2}
+        >
+          <Layer>
+            <Rect width={100} height={100} fill="blue" />
+            <Rect y={window.innerHeight + 2 * PADDING - 100} width={100} height={100} fill="blue" />
+            {[...Array(NUMBER).fill(0)].map((_, i) => (
+              <Circle
+                key={i}
+                x={Math.random() * WIDTH}
+                y={Math.random() * HEIGHT}
+                fill="red"
+                stroke="black"
+                radius={50}
+              ></Circle>
+            ))}
+          </Layer>
+        </Stage>
+      </div>
+    </div>
+  );
+};

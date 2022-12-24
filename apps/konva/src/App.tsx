@@ -1,7 +1,7 @@
-import { CanvasScrollEmulateScroll } from './components/CanvasScroll/CanvasScroll';
+import { CanvasScrollEmulateWithTransform } from './components/CanvasScroll/CanvasScroll';
 
 function App() {
-  return <CanvasScrollEmulateScroll />;
+  return <CanvasScrollEmulateWithTransform />;
 }
 
 export default App;
