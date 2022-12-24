@@ -1,7 +1,7 @@
-import { CircurlarMotion } from './components/CircurlarMotion';
+import { CanvasScrollEmulateScroll } from './components/CanvasScroll/CanvasScroll';
 
 function App() {
-  return <CircurlarMotion />;
+  return <CanvasScrollEmulateScroll />;
 }
 
 export default App;
