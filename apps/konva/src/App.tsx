@@ -1,7 +1,7 @@
-import { CanvasScrollEmulateWithTransform } from './components/CanvasScroll/CanvasScroll';
+import { Step } from './components/Step';
 
 function App() {
-  return <CanvasScrollEmulateWithTransform />;
+  return <Step />;
 }
 
 export default App;
