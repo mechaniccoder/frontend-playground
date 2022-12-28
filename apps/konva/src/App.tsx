@@ -1,7 +1,7 @@
-import { CircurlarMotion } from './components/CircurlarMotion';
+import { StartNightSky } from './components/StartNightSky';
 
 function App() {
-  return <CircurlarMotion />;
+  return <StartNightSky />;
 }
 
 export default App;
